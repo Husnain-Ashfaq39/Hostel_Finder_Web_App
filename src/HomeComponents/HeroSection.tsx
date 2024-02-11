@@ -1,5 +1,5 @@
 import SearchBarMain from "./SearchBarMain";
-
+// Hero Section
 const HeroSection = () => {
   const handleSubmit = (data: Object) => {
     console.log(data);
