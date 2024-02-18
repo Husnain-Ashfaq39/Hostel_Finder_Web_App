@@ -4,11 +4,9 @@ interface Props {
   handleOnSubmit: (data: Object) => void;
 }
 
-interface FormData {
-  search: string;
-}
 
-const SearchBarMain = ({ handleOnSubmit }: Props) => {
+const SearchBarMain = (props:Props) => {
+  const {handleOnSubmit}=props;
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data: FieldValues) => {
@@ -16,7 +14,7 @@ const SearchBarMain = ({ handleOnSubmit }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit((data)=>{})}>
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"

@@ -15,7 +15,7 @@ const HeroSection = () => {
           <h1 className="p-10 font-bold text-center mb-4 text-4xl font-MontserratBold ">
             Last Minute Deals
           </h1>
-          <SearchBarMain handleOnSubmit={handleSubmit} />
+          <SearchBarMain  handleOnSubmit={handleSubmit} />
         </div>
       </div>
     </>
