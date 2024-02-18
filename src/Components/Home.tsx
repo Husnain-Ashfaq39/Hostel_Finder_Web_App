@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "../HomeComponents/Navbar";
 import HeroSection from "../HomeComponents/HeroSection";
 import Card from "../HomeComponents/Card";
-
 function Home() {
   return (
     <>
@@ -18,6 +17,10 @@ function Home() {
       <Card />
       <Card />
       <Card />
+
+      
+     
+      
       </div>
     </>
   );

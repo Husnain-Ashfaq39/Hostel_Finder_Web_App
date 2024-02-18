@@ -1,5 +1,5 @@
 import { useForm, FieldValues } from "react-hook-form";
-
+import { Button } from "../Components/ui/moving-border";
 interface Props {
   handleOnSubmit: (data: Object) => void;
 }
@@ -14,7 +14,12 @@ const SearchBarMain = (props:Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit((data)=>{})}>
+    <>
+      <Button
+        borderRadius="1.75rem"
+        className="bg-white dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800 items-center justify-center h-auto"
+      >
+        <form className=" w-96" onSubmit={handleSubmit((data)=>{})}>
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -26,13 +31,13 @@ const SearchBarMain = (props:Props) => {
           {...register("search", { required: true })}
           type="search"
           id="default-search"
-          className="block outline-none shadow-md w-full p-4 ps-7 text-sm text-gray-900 border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:white dark:white dark:placeholder-gray-400 dark:black dark:focus:ring-blue-500 dark:focus:border-blue-500 transition-colors duration-300 ease-in-out"
+          className="block outline-none shadow-md w-full p-4 ps-7 text-sm text-gray-900 border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:white dark:white dark:placeholder-gray-400 dark:black dark:focus:ring-blue-500 dark:focus:border-blue-500 transition-colors duration-300 ease-in-out "
           placeholder="Explore available hostels..."
           required
         />
         <button
           type="submit"
-          className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 "
         >
           <svg
             className="w-4 h-4 text-white dark:text-white"
@@ -52,6 +57,9 @@ const SearchBarMain = (props:Props) => {
         </button>
       </div>
     </form>
+      </Button>
+    
+    </>
   );
 };
 
