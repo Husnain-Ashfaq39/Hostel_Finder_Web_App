@@ -1,5 +1,5 @@
 import { useForm, FieldValues } from "react-hook-form";
-import { Button } from "../Components/ui/moving-border";
+
 interface Props {
   handleOnSubmit: (data: Object) => void;
 }
@@ -15,10 +15,8 @@ const SearchBarMain = (props:Props) => {
 
   return (
     <>
-      <Button
-        borderRadius="1.75rem"
-        className="bg-white dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800 items-center justify-center h-auto"
-      >
+      
+       
         <form className=" w-96" onSubmit={handleSubmit((data)=>{})}>
       <label
         htmlFor="default-search"
@@ -57,7 +55,7 @@ const SearchBarMain = (props:Props) => {
         </button>
       </div>
     </form>
-      </Button>
+     
     
     </>
   );
