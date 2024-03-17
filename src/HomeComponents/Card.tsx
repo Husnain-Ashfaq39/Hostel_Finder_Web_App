@@ -4,7 +4,7 @@ function Card() {
     return (
         <>
 
-            <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow  ">
+            <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow  transition-transform transform hover:scale-105">
                 <a href="#">
                     <img className="rounded-t-lg" src="/images/h1.jpg" alt="" />
                 </a>
