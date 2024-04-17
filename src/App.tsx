@@ -3,6 +3,7 @@ import Home from "./Components/Home";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SignupHostelOwner from "./Components/SignupHostelOwner";
 
 
 function App() {
@@ -13,6 +14,8 @@ function App() {
         </Route>
           <Route path="Login" element={<Login />} />
           <Route path="Signup" element={<Signup />} />
+          <Route path="SignupHostelOwner" element={<SignupHostelOwner />} />
+          
       </Routes>
     </BrowserRouter>
   );

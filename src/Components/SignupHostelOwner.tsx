@@ -1,47 +1,40 @@
-import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-function Login() {
+function SignupHostelOwner() {
     const navigate = useNavigate();
-    const [error,seterror]=useState("");
     const { register, handleSubmit } = useForm();
+
     const onSubmit = (data: any) => {
-       
+
         console.log(data);
-        
-        fetch("http://localhost:8080/user/login", {
+
+        fetch("http://localhost:8080/user/add", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json" // Assuming you're sending JSON data
+                "Content-Type": "application/json" // Assuming you're sending JSON data
             },
             body: JSON.stringify({
-                "firstname":"",
-                "lastname":"",
-                "email":data.email,
-                "password":data.password
+                "firstname": data.firstname,
+                "lastname": data.lastname,
+                "email": data.email,
+                "cnic":data.cnic,
+                "password": data.password
             }
             )
-          })
-          .then(response => {
-              console.log(response);
-              if(response.ok)
-                {
+        })
+            .then(response => {
+                navigate('/');
+                console.log(response);
 
-                    navigate('/');
-                }
-                else
-                {
-                    seterror("Eiether email or Password is wrong!")
-                }
-            
-          })
-          .catch(error => {
-            console.log(error);
-            
-          });
-          
+            })
+            .catch(error => {
+                console.log(error);
+
+            });
+
     }
+
     return (
         <>
 
@@ -51,33 +44,58 @@ function Login() {
 
                     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                         <img className="mx-auto h-10 w-auto rounded-lg" src="../Images/logo.avif" alt="Your Company" />
-                        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to Hostlify</h2>
+                        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign Up to Hostlify</h2>
                     </div>
 
-                    <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                    <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form className="space-y-6" action="#" method="POST" onSubmit={handleSubmit(onSubmit)}>
+                           
+                            <div>
+                                <label className="block text-sm font-medium leading-6 text-gray-900">Enter FirstName</label>
+                                <div className="mt-2">
+                                    <input id="firstname" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"  {...register("firstname", { required: true })} />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium leading-6 text-gray-900">Enter LastName</label>
+                                <div className="mt-2">
+                                    <input id="lastname" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" {...register("lastname", { required: true })} />
+                                </div>
+                            </div>
                             <div>
                                 <label className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                                 <div className="mt-2">
-                                    <input id="email" type="email" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" {...register("email", { required: true })}/>
+                                    <input id="email" type="email" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" {...register("email", { required: true })} />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium leading-6 text-gray-900">Enter CNIC</label>
+                                <div className="mt-2">
+                                    <input id="cnic" type="text" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" {...register("cnic", { required: true })} />
                                 </div>
                             </div>
 
                             <div>
                                 <div className="flex items-center justify-between">
                                     <label className="block text-sm font-medium leading-6 text-gray-900">Password</label>
-                                    <div className="text-sm">
-                                        <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
-                                    </div>
+
                                 </div>
                                 <div className="mt-2">
-                                    <input id="password"  type="password" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" {...register("password", { required: true })}/>
+                                    <input id="password" type="password" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" {...register("password", { required: true })} />
                                 </div>
-                                <div id='error'>{error}</div>
+                            </div>
+                            <div>
+                                <div className="flex items-center justify-between">
+                                    <label className="block text-sm font-medium leading-6 text-gray-900">Confirm Password</label>
+
+                                </div>
+                                <div className="mt-2">
+                                    <input id="confirmpassword" type="password" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" {...register("confirmpassword", { required: true })} />
+                                </div>
                             </div>
 
                             <div>
-                                <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+                                <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign Up</button>
                             </div>
                         </form>
                         <div className=' flex space-x-4 p-6'>
@@ -105,13 +123,12 @@ function Login() {
 
                             </button>
                         </div>
-
                         <div className=' flex items-center justify-center'>
 
                             <p className="mt-5 text-center text-sm text-gray-500">
-                                Not a member?
+                                Already have Account?
                             </p>
-                            <button onClick={() => navigate('/Signup')} className="mt-5 font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Sign Up</button>
+                            <button onClick={() => navigate('/Login')} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 mt-5"> Sign in</button>
                         </div>
 
                     </div>
@@ -122,4 +139,4 @@ function Login() {
     )
 }
 
-export default Login
+export default SignupHostelOwner
