@@ -1,47 +1,63 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-
+import { useMyContext } from '../context/MyContext';
 function Login() {
     const navigate = useNavigate();
-    const [error,seterror]=useState("");
+   const {setOwner,setUser}= useMyContext();
+    const [error, seterror] = useState("");
     const { register, handleSubmit } = useForm();
-    const onSubmit = (data: any) => {
-       
-        console.log(data);
-        
-        fetch("http://localhost:8080/user/login", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json" // Assuming you're sending JSON data
-            },
-            body: JSON.stringify({
-                "firstname":"",
-                "lastname":"",
-                "email":data.email,
-                "password":data.password
-            }
-            )
-          })
-          .then(response => {
-              console.log(response);
-              if(response.ok)
-                {
+    const onSubmit = async (data:any) => {
+        try {
+            const response = await fetch("http://localhost:8080/user/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "firstname": "",
+                    "lastname": "",
+                    "email": data.email,
+                    "password": data.password
+                })
+            });
 
-                    navigate('/');
+            if (response.ok) {
+                const user = await response.json();
+                console.log(user);
+                setUser(user);
+                navigate('/');
+            } else {
+                const response = await fetch('http://localhost:8080/owner/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "firstname": "",
+                        "lastname": "",
+                        "email": data.email,
+                        "password": data.password
+                    })
+                });
+
+                if (response.ok) {
+                    const owner = await response.json();
+                    console.log(owner);
+                    setOwner(owner);
+                    navigate('/ownerpage')
+                    
+                    // Handle successful login here
+                } else {
+                    // Handle failed login here
+                    
                 }
-                else
-                {
-                    seterror("Eiether email or Password is wrong!")
-                }
+            }
+        } catch (error) {
+            console.error(error);
             
-          })
-          .catch(error => {
-            console.log(error);
-            
-          });
-          
-    }
+        }
+    };
     return (
         <>
 
@@ -59,7 +75,7 @@ function Login() {
                             <div>
                                 <label className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                                 <div className="mt-2">
-                                    <input id="email" type="email" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" {...register("email", { required: true })}/>
+                                    <input id="email" type="email" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" {...register("email", { required: true })} />
                                 </div>
                             </div>
 
@@ -71,7 +87,7 @@ function Login() {
                                     </div>
                                 </div>
                                 <div className="mt-2">
-                                    <input id="password"  type="password" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" {...register("password", { required: true })}/>
+                                    <input id="password" type="password" required className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" {...register("password", { required: true })} />
                                 </div>
                                 <div id='error'>{error}</div>
                             </div>

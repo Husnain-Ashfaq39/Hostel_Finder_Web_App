@@ -9,7 +9,7 @@ function SignupHostelOwner() {
 
         console.log(data);
 
-        fetch("http://localhost:8080/user/add", {
+        fetch("http://localhost:8080/owner/add", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json" // Assuming you're sending JSON data
