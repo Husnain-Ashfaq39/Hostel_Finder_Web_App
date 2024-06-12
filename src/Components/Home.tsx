@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../HomeComponents/Navbar";
-import FilterOption from "../HomeComponents/FilterOption";
+
 import Card from "../HomeComponents/Card";
 import { useMyContext } from "../context/MyContext";
+import { useNavigate } from "react-router-dom";
 // Define interface for hostel data
 interface IHostel {
   id: number;
@@ -19,7 +20,11 @@ function Home() {
   const [hostels, setHostels] = useState<IHostel[]>([]);
   const [input, setInput] = useState("");
   const [selectedHostel, setSelectedHostel] = useState<IHostel | null>(null);
-const {user}=useMyContext();
+  const { user } = useMyContext();
+  const navigate = useNavigate();
+  if (!user.id) {
+    navigate('/login');
+  }
   useEffect(() => {
     fetch('http://localhost:8080/hostels/getall')
       .then(res => res.json())
@@ -81,13 +86,13 @@ const {user}=useMyContext();
           </div>
         )}
         <div className="py-5 max-w-xs mx-auto">
-  <FilterOption />
-</div>
+
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
           {hostels.map(hostel => {
-            
-            return <Card ownercard={false} userId={user.id} key={hostel.id} hostel={hostel} />
+
+            return <Card wishlist={false} ownercard={false} userId={user.id} key={hostel.id} hostel={hostel} />
           })}
         </div>
       </div>

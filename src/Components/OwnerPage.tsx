@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NavbarOwnerpage from '../OwnerPageComponents/NavBar';
 import Card from "../HomeComponents/Card";
 import { useMyContext } from '../context/MyContext';
+import { useNavigate } from 'react-router-dom';
 
 interface IHostel {
     id: number;
@@ -16,7 +17,8 @@ interface IHostel {
 const OwnerPage = () => {
     const [hostels, setHostels] = useState<IHostel[]>([]);
     const { owner,user } = useMyContext();
-
+    const navigate = useNavigate();
+   
     useEffect(() => {
         fetch('http://localhost:8080/hostels/getall')
             .then(res => res.json())
@@ -35,7 +37,7 @@ const OwnerPage = () => {
                 <h2 className="text-2xl font-bold mb-8">Welcome to Your Dashboard</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
                     {owner.id !== 0 && hostels.map(hostel => (
-                        hostel.hostelOwnerId === owner.id && <Card ownercard={true} userId={user.id}key={hostel.id} hostel={hostel} />
+                        hostel.hostelOwnerId === owner.id && <Card wishlist={false} ownercard={true} userId={user.id}key={hostel.id} hostel={hostel} />
                     ))}
                 </div>
             </div>

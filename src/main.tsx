@@ -5,6 +5,7 @@ import './index.css'
 import { MyContextProvider } from './context/MyContext';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <MyContextProvider>
+    
   <App />
 </MyContextProvider>
 )

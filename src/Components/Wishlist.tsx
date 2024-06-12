@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Card from "../HomeComponents/Card";
 import { useMyContext } from "../context/MyContext";
+import Navbar from "../HomeComponents/Navbar";
 // Define interface for hostel data
 interface IHostel {
   id: number;
@@ -12,11 +13,11 @@ interface IHostel {
   location: string;
 }
 const Wishlist = () => {
-    const [allHostels, setAllHostels] = useState<IHostel[]>([]);
+  const [allHostels, setAllHostels] = useState<IHostel[]>([]);
   const [hostels, setHostels] = useState<IHostel[]>([]);
   const [input, setInput] = useState("");
   const [selectedHostel, setSelectedHostel] = useState<IHostel | null>(null);
-const {user}=useMyContext();
+  const { user } = useMyContext();
   useEffect(() => {
     fetch('http://localhost:8080/hostels/getall')
       .then(res => res.json())
@@ -40,21 +41,17 @@ const {user}=useMyContext();
     }
   }, [input, allHostels, selectedHostel]);
 
-  const handleChange = (value: string, hostel?: IHostel) => {
-    if (hostel) {
-      setSelectedHostel(hostel);
-      setInput("");
-    } else {
-      setInput(value);
-    }
-  };
+  
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-          {hostels.map(hostel => {
-            
-            return <Card ownercard={false} userId={user.id} key={hostel.id} hostel={hostel} />
-          })}
-        </div>
+    <>
+      <Navbar></Navbar>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+        {hostels.map(hostel => {
+
+          return <Card wishlist={true} ownercard={false} userId={user.id} key={hostel.id} hostel={hostel} />
+        })}
+      </div>
+    </>
   )
 }
 

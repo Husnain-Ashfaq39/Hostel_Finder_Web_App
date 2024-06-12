@@ -17,9 +17,10 @@ type Props = {
     hostel: IHostel;
     ownercard: boolean;
     userId: number;
+    wishlist: boolean;
 };
 
-function Card({ hostel, ownercard, userId }: Props) {
+function Card({ hostel, ownercard, userId, wishlist }: Props) {
     const [imgurl, setImgUrl] = useState('');
     const [isLoading, setLoading] = useState(false);
     const [isModalOpen, setModalOpen] = useState(false);
@@ -123,6 +124,7 @@ function Card({ hostel, ownercard, userId }: Props) {
     };
 
     if (isLoading) return <CardSkeleton />;
+    if (wishlist && !isFavorite) return null; // Only render the card if wishlist is false or if the hostel is a favorite
 
     return (
         <>

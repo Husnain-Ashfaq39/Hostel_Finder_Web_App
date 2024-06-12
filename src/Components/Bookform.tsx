@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface RoomBookingFormProps {
   userId: string;
@@ -9,6 +10,8 @@ const RoomBookingForm: React.FC<RoomBookingFormProps> = ({ userId, hostelId }) =
   const [roomType, setRoomType] = useState<number>(1);
   const [joiningDate, setJoiningDate] = useState<string>('');
   const [totalPrice, setTotalPrice] = useState<number>(10);
+  const [dateError, setDateError] = useState<string>('');
+  const navigate = useNavigate();
 
   const maxRoomType = 4;
 
@@ -22,10 +25,52 @@ const RoomBookingForm: React.FC<RoomBookingFormProps> = ({ userId, hostelId }) =
     setJoiningDate(event.target.value);
   };
 
+  const validateDate = (dateString: string) => {
+    const today = new Date();
+    const selectedDate = new Date(dateString);
+
+    // Ensure the date is not in the past
+    if (selectedDate < today) {
+      return 'Joining date cannot be in the past';
+    }
+
+    // Ensure the date is within the next year (for example)
+    const nextYear = new Date(today);
+    nextYear.setFullYear(today.getFullYear() + 1);
+    if (selectedDate > nextYear) {
+      return 'Joining date cannot be more than one year in the future';
+    }
+
+    return '';
+  };
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // Handle form submission logic here, including using userId and hostelId
-    console.log(`User ID: ${userId}, Hostel ID: ${hostelId}, Room Type: ${roomType}, Joining Date: ${joiningDate}, Total Price: ${totalPrice}`);
+
+    // Validate the joining date
+    if (!joiningDate) {
+      setDateError('Joining date cannot be empty');
+      return;
+    }
+
+    const dateValidationError = validateDate(joiningDate);
+    if (dateValidationError) {
+      setDateError(dateValidationError);
+      return;
+    }
+
+    // Clear any previous date error
+    setDateError('');
+
+    // Navigate to payment page with state
+    navigate('/payment', {
+      state: {
+        userId,
+        hostelId,
+        roomType: `${roomType} Seater Room`,
+        totalPrice,
+      },
+    });
   };
 
   return (
@@ -58,6 +103,7 @@ const RoomBookingForm: React.FC<RoomBookingFormProps> = ({ userId, hostelId }) =
               onChange={handleDateChange}
               value={joiningDate}
             />
+            {dateError && <p className="text-red-500 text-sm mt-2">{dateError}</p>}
           </div>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2" htmlFor="total-price">Total Price</label>
@@ -71,7 +117,7 @@ const RoomBookingForm: React.FC<RoomBookingFormProps> = ({ userId, hostelId }) =
             />
           </div>
           <div className="mt-8">
-            <button type="submit" className="w-full bg-green-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg focus:outline-none">Proceed to checkout</button>
+            <button type="submit" className="w-full bg-green-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg focus:outline-none">Proceed to Payment</button>
           </div>
         </form>
       </div>

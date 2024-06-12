@@ -10,6 +10,9 @@ import PopupModal from "./Components/PopupModel";
 import FetchImage from "./Components/FetchImage";
 import { useMyContext } from "./context/MyContext";
 import { Booking } from "./Components/Booking";
+import Wishlist from "./Components/Wishlist";
+import PaymentForm from "./Components/PaymentForm";
+import MyBookings from "./Components/MyBookings";
 
 function App() {
   const {owner}=useMyContext();
@@ -26,6 +29,9 @@ function App() {
           <Route path="popmodel" element={<PopupModal/>} />
           <Route path="fetchimage" element={<FetchImage/>} />
           <Route path="booking" element={<Booking/>} />
+          <Route path="wishlist" element={<Wishlist/>} />
+          <Route path="payment" element={<PaymentForm/>} />
+          <Route path="mybooking" element={<MyBookings/>} />
       </Routes>
     </BrowserRouter>
   );

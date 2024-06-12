@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import EditProfileModal from '../Components/EditProfileModal';
 import { useMyContext } from '../context/MyContext';
 
+
 interface User {
   id: number;
   firstname: string;
@@ -15,6 +16,7 @@ const Navbar: React.FC = () => {
   const [user, setUser] = useState<User>({ id: 0, firstname: '', lastname: '', email: '' });
   const [isModalOpen, setModalOpen] = useState(false);
   const { user: uss } = useMyContext();
+  
 
   useEffect(() => {
     // Fetch user data from the backend on component mount
@@ -70,7 +72,7 @@ const Navbar: React.FC = () => {
                 <div className="font-medium dark:text-white">
                   <div>{user.firstname ? <p>{user.firstname}</p> : <p>Username</p>}</div>
                 </div>
-                <img className=' ml-4' src="./Images/wishlist_icon.png" alt="wishlist" height={10} width={30} />
+                <img className=' ml-4 cursor-pointer' src="./Images/wishlist_icon.png" alt="wishlist" height={10} width={30} onClick={()=>{ navigate('/wishlist')}} />
               </div>
             )}
           </div>
@@ -79,14 +81,9 @@ const Navbar: React.FC = () => {
               <li>
                 <a href="/" className="block py-2 px-3 md:p-0 text-gray-900 rounded bg-blue-700 md:bg-transparent md:text-blue-700" aria-current="page">Home</a>
               </li>
+            
               <li>
-                <a href="#" className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700">About</a>
-              </li>
-              <li>
-                <a href="#" className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700">Services</a>
-              </li>
-              <li>
-                <a href="#" className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700">Contact</a>
+                <a className="block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 cursor-pointer" onClick={()=>{navigate('/mybooking')}}>My Bookings</a>
               </li>
             </ul>
           </div>
